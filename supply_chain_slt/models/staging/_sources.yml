@@ -1,0 +1,69 @@
+version: 2
+
+sources:
+  - name: supply_chain_raw
+    description: raw supply chain data loaded from CSV files
+    database: SUPPLY_CHAIN_DB
+    schema: RAW
+    tables:
+
+      - name: customers
+        description: customer master data
+        columns:
+          - name: customer_id
+            description: unique identifier for each customer
+            data_tests: [not_null, unique]
+          - name: customer_name
+            description: name of the customer
+            data_tests: [not_null]
+          - name: city
+            description: city where the customer operates
+
+      - name: products
+        description: product master data
+        columns:
+          - name: product_id
+            description: unique identifier for each product
+            data_tests: [not_null, unique]
+          - name: product_name
+            description: name of the product
+            data_tests: [not_null]
+          - name: category
+            description: product category
+
+      - name: target_orders
+        description: customer-level service targets for order fulfilment
+        columns:
+          - name: customer_id
+            description: unique identifier for each customer
+            data_tests: [not_null]
+          - name: ontime_target_pct
+            description: target percentage for on-time delivery
+          - name: infull_target_pct
+            description: target percentage for in-full delivery
+          - name: otif_target_pct
+            description: target percentage for OTIF performance
+
+      - name: order_lines
+        description: raw order line data (one row per product in an order)
+        columns:
+          - name: order_id
+            description: identifier for each order
+            data_tests: [not_null]
+          - name: order_placement_date
+            description: date when the order was placed
+            data_tests: [not_null]
+          - name: customer_id
+            description: customer placing the order
+            data_tests: [not_null]
+          - name: product_id
+            description: product requested in the order line
+            data_tests: [not_null]
+          - name: order_qty
+            description: quantity ordered
+          - name: agreed_delivery_date
+            description: promised delivery date
+          - name: actual_delivery_date
+            description: actual delivery date
+          - name: delivery_qty
+            description: quantity delivered
